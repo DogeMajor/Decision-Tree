@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#OK
 
 import time
 #question is a function which gives as an answer as a number,this corresponds with the
@@ -46,7 +47,7 @@ def ranges_sort(x, ranges):
     return len(ranges)
 
 
-class Node(object):
+class Node(object):  # OK!
 
     def __init__(self, question=None, q_index=0, q_params=None, parent=None):
         self._question = question
@@ -63,6 +64,17 @@ class Node(object):
     @property
     def row_numbers(self):
         return self._node_data.keys()
+
+    @property
+    def child_index(self):
+        child_index = 0
+        try:
+            for index, child in enumerate(self._parent._children):
+                if self == child:
+                    child_index = index
+            return child_index
+        except AttributeError:
+            print('This node does not have a parent!')
 
     def __del__(self):  #Fix this!
         self._children = []
@@ -89,3 +101,4 @@ if __name__=="__main__":
     B._children = C
     print(B.output([1,13]))
     print(C.output([1, 3]))
+

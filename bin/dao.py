@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #import numpy as np
+#OK
 import math
 
 
@@ -14,7 +15,7 @@ def process(row):
     result = [float(temp[i]) for i in range(len(temp)-1)].append(temp[-1])
     return result
 
-class Dao(object):
+class Dao(object):  #  OK!!
 
     def __init__(self, file_name):
         #self._training_input, self._training_output  = self._read(file_name)
@@ -45,5 +46,6 @@ if __name__=="__main__":
     iris_set = Dao('iris.data')
     print(iris_set._data_groups())
     print(iris_set._training_input())
+    print(iris_set._training_output())
     print('yes!')
 
