@@ -30,18 +30,23 @@ class TreeTest(unittest.TestCase):
         self.assertEqual(self.tree._goto([0, 0, 1]), self.child12)
         self.assertEqual(self.tree._goto([0, 1, 0]), self.child21)
 
+    def test_route(self):
+        #print(self.tree._goto([0, 0, 0]))
+        self.assertEqual(self.tree._route(self.child11), [0, 0, 0])
+        self.assertEqual(self.tree._route(self.child12), [0, 0, 1])
+        self.assertEqual(self.tree._route(self.child21), [0, 1, 0])
+
     def test_pop(self):
         self.assertTrue(self.tree.pop([0,0,1]))
-        #print(self.child12._parent)
         self.assertEqual(None, self.child12._parent)
 
     def test_output(self):
         x0 = [1, .1, 14]
         x1 = [.5, 0, 15]
         x2 = [1.5, 2.1, 3.5]
-        self.assertEqual(self.tree.output(x0), (self.child11,1))
-        self.assertEqual(self.tree.output(x1), (self.child12, 0))
-        self.assertEqual(self.tree.output(x2), (self.child21, 2))
+        self.assertEqual(self.tree.output(x0), 1)
+        self.assertEqual(self.tree.output(x1), 0)
+        self.assertEqual(self.tree.output(x2), 2)
 
 
     def tearDown(self):
@@ -54,7 +59,5 @@ class TreeTest(unittest.TestCase):
         del self.tree
 
 
-
-if __name__=="__main__":
-    #print(unittest.__dict__)
+if __name__ == "__main__":
     unittest.main()

@@ -1,30 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#import numpy as np
-#OK
-import math
+
+import abc
+import os
 
 
-def _process(row):   #These can be moved into a separate module if needed
+def _process(row):
     temp = row.split(',')
     input = [float(temp[i]) for i in range(len(temp) - 1)]
     return input, temp[-1]
 
-def process(row):
-    temp = row.split(',')
-    result = [float(temp[i]) for i in range(len(temp)-1)].append(temp[-1])
-    return result
+class BaseDAO(object):
+    __metaclass__ = abc.ABCMeta
 
-class Dao(object):  #  OK!!
+    def __init__(self):
+        self._training_data = []
 
-    def __init__(self, file_name):
-        #self._training_input, self._training_output  = self._read(file_name)
-        self._training_data = self._read(file_name)
+    @property
+    def input_length(self):
+        return len(self._training_data[0][0])
 
-    def _read(self, file_name, func=_process):
-        with open(file_name, 'r') as file:
-            data = [func(row) for row in file]
-        return data
+    @abc.abstractmethod
+    def _read(self, *args):
+        raise NotImplementedError
 
     def _training_input(self):
         inputs = [input for input, output in self._training_data]
@@ -34,18 +32,20 @@ class Dao(object):  #  OK!!
         outputs = [output for input, output in self._training_data]
         return outputs
 
-    def _data_groups(self): #Not needed
-        data = self._training_data
-        results = [result for inputs, result in data]
-        result_set = set(results)
-        print(result_set)
-        data_groups = {i: results[i] for i in range(len(results))}
-        return data_groups
+
+class IrisDAO(BaseDAO):
+
+    def __init__(self, file_name):
+        super(IrisDAO, self).__init__()
+        self._training_data = self._read(file_name)
+
+    def _read(self, file_name, func=_process):
+        os.chdir('../data')
+        with open(file_name, 'r') as file:
+            data = [func(row) for row in file]
+        os.chdir('../bin')
+        return data
+
 
 if __name__=="__main__":
-    iris_set = Dao('iris.data')
-    print(iris_set._data_groups())
-    print(iris_set._training_input())
-    print(iris_set._training_output())
-    print('yes!')
-
+    pass

@@ -1,11 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#OK
-
-import time
-#question is a function which gives as an answer as a number,this corresponds with the
-#index of the child Node
-#Nesting cannot be avoided, since no pointers!
 
 def toy_question(x, param=None):
     return int(x)%2
@@ -19,35 +13,35 @@ def zero(x, param=None):
 def constant(x, value):
     return value
 
-def projection(x,index):
+def projection(x, index):
     return x[index]
 
-def bigger_than(x,min):
-    if(x>min):
+def bigger_than(x, minimum):
+    if x>minimum:
         return 1
     else:
         return 0
 
-def smaller_than(x,max):
-    if(x<max):
+def smaller_than(x, maximum):
+    if x<maximum:
         return 1
     else:
         return 0
 
-def equivalent_to(x,value):
-    if(x==value):
+def equivalent_to(x, value):
+    if x==value:
         return 1
     else:
         return 0
 
 def ranges_sort(x, ranges):
-    for i, range in enumerate(ranges):
-        if x < range:
+    for i, range_ in enumerate(ranges):
+        if x < range_:
             return i
     return len(ranges)
 
 
-class Node(object):  # OK!
+class Node(object):
 
     def __init__(self, question=None, q_index=0, q_params=None, parent=None):
         self._question = question
@@ -58,8 +52,7 @@ class Node(object):  # OK!
         self._node_data = {}
         self._map_data = {}
         if parent:
-            parent._children.append(self)    #add this Node to the children of the parent Node!
-        #OK
+            parent._children.append(self)
 
     @property
     def row_numbers(self):
@@ -80,15 +73,13 @@ class Node(object):  # OK!
         self._children = []
         self._parent = None
         self._question = None
-        #print('deleting node: ', self)
         del self
 
-    def output(self, input_):  #should always be a number!
-        #if self._children != (None or []):
+    def output(self, input_):
         return self._question(input_[self._q_index], self._q_params)
-        #OK
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
 
     A = Node(ranges_sort,2,[0,1,2],None)
     print(A.__dict__)
@@ -101,4 +92,3 @@ if __name__=="__main__":
     B._children = C
     print(B.output([1,13]))
     print(C.output([1, 3]))
-
